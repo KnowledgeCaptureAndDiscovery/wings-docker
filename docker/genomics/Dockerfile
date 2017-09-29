@@ -3,13 +3,16 @@ RUN sed -i 's/debian testing main/debian testing main contrib non-free/' /etc/ap
 
 # Install general tools
 RUN apt-get update
-RUN apt-get -y install graphviz unzip curl libssl-dev libcurl4-openssl-dev libxml2-dev python-pip tomcat8 git cgroupfs-mount 
+RUN apt-get -y install graphviz unzip curl libssl-dev libcurl4-openssl-dev libxml2-dev python-pip tomcat8 git cgroupfs-mount maven
 
 # Install WINGS
-RUN mkdir -p /opt/wings/storage/default /opt/wings/server
-ADD http://www.wings-workflows.org/downloads/docker/latest/portal/wings-portal.xml /etc/tomcat8/Catalina/localhost/wings-portal.xml
-ADD http://www.wings-workflows.org/downloads/docker/latest/portal/portal.properties /opt/wings/storage/default/portal.properties
-RUN cd /opt/wings/server && curl -O http://www.wings-workflows.org/downloads/docker/latest/portal/wings-portal.war && unzip wings-portal.war && rm wings-portal.war
+RUN mkdir -p /opt/wings/storage/default
+ADD ./config/default/wings-portal.xml /etc/tomcat8/Catalina/localhost/wings-portal.xml
+ADD ./config/default/portal.properties /opt/wings/storage/default/portal.properties
+RUN mkdir /wings-src
+ADD ./config/pom.xml /wings-src/pom.xml
+RUN cd /wings-src && mvn package
+RUN cp -R /wings-src/target/wings-portal-4.0 /opt/wings/server
 RUN sed -i 's/Resource name="UserDatabase" auth/Resource name="UserDatabase" readonly="false" auth/' /etc/tomcat8/server.xml
 RUN sed -i 's/=tomcat8/=root/' /etc/default/tomcat8
 RUN sed -i 's/<\/tomcat-users>/  <user username="admin" password="4dm1n!23" roles="WingsUser,WingsAdmin"\/>\n<\/tomcat-users>/' /etc/tomcat8/tomcat-users.xml
@@ -26,11 +29,19 @@ RUN add-apt-repository \
 RUN apt-get update && apt-get -y install docker-ce
 
 # Install Genomics Domain Specific Stuff
-RUN apt-get -y install samtools tophat cufflinks
+RUN sed -i 's/debian jessie main/debian jessie main contrib non-free/' /etc/apt/sources.list
+RUN cat /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get -y install libbz2-dev liblzma-dev
+RUN apt-get -y install python-dev samtools tophat cufflinks
 RUN pip install RSeQC
+
+# Install R and stuff
+RUN apt-get -y install r-base r-base-dev
 ADD http://www.wings-workflows.org/downloads/docker/latest/domain/R-install.R /tmp/R-install.R
 RUN Rscript /tmp/R-install.R
 
 # Start WINGS
 RUN chmod 755 /setenv.sh 
 CMD /setenv.sh && service tomcat8 start && /bin/bash
+RUN sed -i 's/debian testing main/debian testing main contrib non-free/' /etc/apt/sources.list
