@@ -10,7 +10,7 @@ RUN pip install RSeQC
 
 # Install R and stuff
 RUN apt-get -y install r-base r-base-dev
-ADD http://www.wings-workflows.org/downloads/docker/latest/domain/R-install.R /tmp/R-install.R
+ADD ./docker/genomics/R-install.R /tmp/R-install.R
 RUN Rscript /tmp/R-install.R
 
 # Start WINGS
