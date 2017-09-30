@@ -10,9 +10,9 @@ In order to use this images, you can simply pull them from dockerhub:
 ```docker pull kcapd/wings-base``` or ```docker pull kcapd/wings-genomics```
 
 
-Alternatively, you may build any of the docker files in the "docker" folder of this repository. For example:
+Alternatively, you may build any of the docker files in the "docker" folder of this repository. Please build them from the folder whichc contains this readme. For example:
 
-```docker build -t [IMAGE_NAME] . ```
+```docker build -t [IMAGE_NAME] -f docker/default/Dockerfile . ```
 
 Note that this takes a little bit more time than simply pulling the images from dockerhub. However, this approach is better if you want to install additional software on your WINGS image.
 
