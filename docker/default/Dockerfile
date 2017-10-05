@@ -12,7 +12,7 @@ ADD ./config/default/portal.properties /opt/wings/storage/default/portal.propert
 RUN mkdir /wings-src
 ADD ./config/pom.xml /wings-src/pom.xml
 RUN cd /wings-src && mvn package
-RUN cp -R /wings-src/target/wings-portal-4.0 /opt/wings/server
+RUN cp -R /wings-src/target/wings-portal-4.0-SNAPSHOT /opt/wings/server
 RUN sed -i 's/Resource name="UserDatabase" auth/Resource name="UserDatabase" readonly="false" auth/' /etc/tomcat8/server.xml
 RUN sed -i 's/=tomcat8/=root/' /etc/default/tomcat8
 RUN sed -i 's/<\/tomcat-users>/  <user username="admin" password="4dm1n!23" roles="WingsUser,WingsAdmin"\/>\n<\/tomcat-users>/' /etc/tomcat8/tomcat-users.xml
