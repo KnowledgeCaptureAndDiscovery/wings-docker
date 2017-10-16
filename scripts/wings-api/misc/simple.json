@@ -1,0 +1,8 @@
+{
+	"softwares": [
+		"http://localhost:8080/wings-portal/export/common/resource/library.owl#Python_a2.7.6"
+	],
+	"environment": { 
+		"PYTHON_BIN": "/usr/bin/python"
+	}
+}

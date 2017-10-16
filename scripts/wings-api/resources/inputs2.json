@@ -1,0 +1,6 @@
+{
+	"classIndex": 3,
+	"javaHeapSize": "512M",
+	"testData": "file:contact-lenses-2010-05-04-110805-100.arff",
+	"trainingData": "file:contact-lenses-2010-05-04-110834-10000.arff"
+}

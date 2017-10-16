@@ -1,0 +1,24 @@
+{
+	"softwares": [
+		"http://localhost:8080/wings-portal/export/common/resource/library.owl#cufflinks_a2.2.1", 
+		"http://localhost:8080/wings-portal/export/common/resource/library.owl#bcftools1.3_a1.3", 
+		"http://localhost:8080/wings-portal/export/common/resource/library.owl#Samtools_a1.3.0", 
+		"http://localhost:8080/wings-portal/export/common/resource/library.owl#TopHat2_a2.1.0", 
+		"http://localhost:8080/wings-portal/export/common/resource/library.owl#Samtools_a0.1.6", 
+		"http://localhost:8080/wings-portal/export/common/resource/library.owl#R3.2.3_a3.2.3", 
+		"http://localhost:8080/wings-portal/export/common/resource/library.owl#zipdir_a3.0", 
+		"http://localhost:8080/wings-portal/export/common/resource/library.owl#bowtie2_a2.2.6", 
+		"http://localhost:8080/wings-portal/export/common/resource/library.owl#java1.8_a1.8.0_71"
+	],
+	"environment": { 
+		"R_HOME": "/usr/bin/R", 
+		"SAMTOOLS13_HOME": "/usr/bin",
+		"TOPHAT2_HOME": "/usr/bin",
+		"CUFFLINKS_HOME": "/usr/bin",
+		"BOWTIE2_HOME": "/usr/bin",
+		"SAMTOOLS_HOME": "/usr/bin",
+		"BCFTOOLS13_HOME": "/usr/bin",
+		"JAVA_HOME": "/usr/bin",
+		"ZIP_HOME": "/usr/bin"
+	}
+}

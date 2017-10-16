@@ -1,0 +1,10 @@
+{
+	"FormattedFileSet1": ["file:en_France.html", "file:en_Germany.html", "file:en_LosAngeles.html", "file:en_USA.pdf"],
+	"FormattedFile2": "file:en_Chicago.html",
+	"File1SpecialChars": "file:specialchars",
+	"File2SpecialChars": "file:specialchars",
+	"File1TrivialWords": "file:en_trivials",
+	"File2TrivialWords": "file:en_trivials",
+	"File1MinLimitOccurances:": 3,
+	"File2MinLimitOccurances:": 3
+}

@@ -1,0 +1,7 @@
+{
+	"hasMetadataProperty1": "string",
+	"hasMetadataProperty2": "int",
+	"hasMetadataProperty3": "date",
+	"hasMetadataProperty4": "float",
+	"hasMetadataProperty5": "boolean"
+}
