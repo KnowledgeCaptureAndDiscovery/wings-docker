@@ -1,5 +1,5 @@
 {
-	"FormattedFileSet1": ["file:en_France.html", "file:en_Germany.html", "file:en_LosAngeles.html", "file:en_USA.pdf"],
+	"FormattedFileSet1": ["file:_1._May_2014.pdf", "file:en_France.html", "file:en_Germany.html", "file:en_LosAngeles.html", "file:en_USA.pdf"],
 	"FormattedFile2": "file:en_Chicago.html",
 	"File1SpecialChars": "file:specialchars",
 	"File2SpecialChars": "file:specialchars",

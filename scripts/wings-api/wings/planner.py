@@ -7,26 +7,46 @@ class Planner(UserOperation):
 
 	def __init__(self, server, userid, domain, template):
 		super(Planner, self).__init__(server, userid, domain)
-		self.libns = self.get_export_url() + "data/library.owl#";
-		self.wflowns = self.get_export_url() + "workflows/" + template + ".owl#";
-		self.wflowid = self.wflowns + template;
+		self.libns = self.get_export_url() + "data/library.owl#"
+		self.wflowns = self.get_export_url() + "workflows/" + template + ".owl#"
+		self.wflowid = self.wflowns + template
+		self.xsdns = "http://www.w3.org/2001/XMLSchema#"
 
-	def _get_input(self, val):
+	def _set_bindings(self, invar, val, dataBindings, parameterBindings, parameterTypes):
 		if isinstance(val, basestring) and val.startswith('file:'):
-			return self.libns + val[5:]
+			data = dataBindings.get(self.wflowns + invar, [])
+			data.append(self.libns + val[5:])
+			dataBindings[self.wflowns + invar] = data
 		else:
-			return val
+			parameterBindings[self.wflowns + invar] = val
+			typeid = self.xsdns + "string"
+			if type(val) is int:
+				typeid = self.xsdns + "integer"
+			elif type(val) is float:
+				typeid = self.xsdns + "float"
+			elif type(val) is bool:
+				typeid = self.xsdns + "boolean"
+			parameterTypes[self.wflowns + invar] = typeid
 
 	def get_expansions(self, inputs):
-		postdata = [('__template_id', self.wflowid), ('__cbindings', '{}'), ('__paramdtypes', '{}')]
+		postdata = [('templateId', self.wflowid), ('componentBindings', '{}'), ('parameterBindings', '{}')]
+		dataBindings = dict()
+		parameterBindings = dict()
+		parameterTypes = dict()
 		for invar in inputs:
 			if type(inputs[invar]) is list:
 				for val in inputs[invar]:
-					postdata.append((invar, self._get_input(val)))
+					self._set_bindings(invar, val, dataBindings, parameterBindings, parameterTypes)
 			else:
-				postdata.append((invar, self._get_input(inputs[invar])))
-		#print postdata
-		resp = self.session.post( self.get_request_url() + 'plan/getExpansions', data=postdata )
+				self._set_bindings(invar, inputs[invar], dataBindings, parameterBindings, parameterTypes)
+		postdata = {
+			"templateId": self.wflowid, 
+			"dataBindings": dataBindings, 
+			"parameterBindings": parameterBindings, 
+			"parameterTypes": parameterTypes,
+			"componentBindings": dict()
+		}
+		resp = self.session.post( self.get_request_url() + 'plan/getExpansions', json=postdata )
 		return resp.json()
 
 	def select_template(self, templates):
@@ -36,7 +56,7 @@ class Planner(UserOperation):
 		i = 1
 		num = len(templates)
 		for tpl in templates:
-			print "%s. %s" % (i, self.get_template_description(tpl['template']))
+			print("%s. %s" % (i, self.get_template_description(tpl['template'])))
 			i += 1
 		index = 0
 		while True: 
@@ -45,7 +65,7 @@ class Planner(UserOperation):
 			else:
   				index = int(raw_input("Please enter your selection: "))
 			if index < 1 or index > num:
-				print "Invalid Selection. Try again"
+				print("Invalid Selection. Try again")
 			else:
 				break
 		return templates[index-1]
@@ -53,7 +73,8 @@ class Planner(UserOperation):
 	def get_template_description(self, template):
 		regex = re.compile(r"^.*#")
 		components = {}
-		for node in template['Nodes']:
+		for nodeid in template['Nodes']:
+			node = template['Nodes'][nodeid]
 			comp = regex.sub("", node['componentVariable']['binding']['id'])
 			if comp in components:
 				components[comp] += 1

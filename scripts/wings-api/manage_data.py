@@ -38,13 +38,13 @@ if data.login(args.password):
 			data.del_data_type(args.data_type)
 	elif args.get:
 		if args.data_id:
-			print data.get_data_description(args.data_id)
+			print(data.get_data_description(args.data_id))
 		elif args.data_type:
-			print data.get_datatype_description(args.data_type)
+			print(data.get_datatype_description(args.data_type))
 		else:
-			print data.get_all_items()
+			print(data.get_all_items())
 	elif args.upload_data:
-		data.upload_data_for_type(args.upload_data, args.data_type)
+		print(data.upload_data_for_type(args.upload_data, args.data_type))
 	elif args.save_metadata and args.data_id:
 		with open(args.save_metadata) as dfile:    
 			jsonobj = json.load(dfile)

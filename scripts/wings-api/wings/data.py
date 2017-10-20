@@ -84,7 +84,10 @@ class ManageData(UserOperation):
 		 	details = response.json()
 			if details['success']:
 				dataid = os.path.basename(details['location'])
+				dataid = re.sub(r"(^\d.+$)", r"_\1", dataid)
 				self.add_data_for_type(dataid, dtype)
+				self.set_data_location(dataid, details['location'])
+				return dataid
 
 	def save_metadata(self, dataid, metadata):
 		pvals = []

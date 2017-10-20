@@ -14,23 +14,11 @@ parser.add_argument("-a", "--auto", help="Automatically run first plan (non-inte
 parser.add_argument("-i", "--inputs", help="Inputs json file")
 args = parser.parse_args()
 
-def get_template_description(tpl):
-	regex = re.compile(r"^.*#")
-	components = {}
-	for node in tpl['Nodes']:
-		comp = regex.sub("", node['componentVariable']['binding']['id'])
-		if comp in components:
-			components[comp] += 1
-		else:
-			components[comp] = 1
-	print components
-
 # Create manage user api
 planner = wings.Planner(args.server, args.userid, args.domain, args.template)
 
 # Login with password
 if planner.login(args.password): 
-	print args.inputs
 	if args.inputs:
 		with open(args.inputs) as ifile:    
 			inputs = json.load(ifile)
@@ -42,7 +30,7 @@ if planner.login(args.password):
 				if not args.auto:
 					template = planner.select_template(templates)
 				runid = planner.run_workflow(template, seed)
-				print "Run id: " + runid
+				print(runid)
 	# Logout
 	planner.logout()
 
