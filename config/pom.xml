@@ -8,7 +8,7 @@
   <groupId>edu.isi.wings</groupId>
   <artifactId>wings-portal</artifactId>
   <version>4.0-SNAPSHOT</version>
-  <name>Wings Portal</name>
+  <name>Wings Portal Snapshot [11-27-2017]</name>
   <packaging>war</packaging>
 
   <repositories>
