@@ -29,7 +29,7 @@ RUN apt-get update && apt-get -y install docker-ce
 COPY ./config/tomcat/tomcat-users.xml /usr/local/tomcat/conf/
 
 # Add the tomcat server configuration file
-RUN sed -i 's/Resource name="UserDatabase" auth/Resource name="UserDatabase" readonly="false" auth/' /etc/tomcat8/server.xml
+COPY ./config/tomcat/server.xml /usr/local/tomcat/conf/
 
 # Install wings
 ADD ./config/pom.xml /wings-src/pom.xml
