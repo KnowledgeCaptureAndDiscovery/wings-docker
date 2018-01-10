@@ -16,6 +16,14 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
         software-properties-common \
         gnupg2
 
+# Install Docker
+RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add -
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+   $(lsb_release -cs) \
+   stable"
+RUN apt-get update && apt-get -y install docker-ce
+
 # Install WINGS
 RUN mkdir -p /opt/wings/storage/default
 ADD ./config/default/wings-portal.xml /etc/tomcat8/Catalina/localhost/wings-portal.xml
@@ -29,15 +37,6 @@ RUN sed -i 's/=tomcat8/=root/' /etc/default/tomcat8
 RUN sed -i 's/<\/tomcat-users>/  <user username="admin" password="4dm1n!23" roles="WingsUser,WingsAdmin"\/>\n<\/tomcat-users>/' /etc/tomcat8/tomcat-users.xml
 ADD http://www.wings-workflows.org/downloads/docker/latest/portal/setenv.txt /setenv.sh
 EXPOSE 8080
-
-# Install Docker
-RUN apt-get -y install --no-install-recommends apt-transport-https ca-certificates software-properties-common gnupg2
-RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add -
-RUN add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
-   $(lsb_release -cs) \
-   stable"
-RUN apt-get update && apt-get -y install docker-ce
 
 # Start WINGS
 RUN chmod 755 /setenv.sh 
