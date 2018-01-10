@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  # Database service
+  wings:
+    image: "wings"
+    build:
+      context: .
+      dockerfile: docker/default/Dockerfile
+    environment:
+      WINGS_MODE: dind
+    volumes:
+      - wings_data:/opt/wings
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080
+
+volumes:
+  wings_data:
