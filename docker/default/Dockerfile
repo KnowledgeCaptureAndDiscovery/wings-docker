@@ -50,6 +50,5 @@ RUN cp -R /wings-src/target/wings-portal-4.0-SNAPSHOT /usr/local/tomcat/webapps/
 # Add wings context file to the wings portal webapp
 COPY ./config/default/wings-portal.xml /usr/local/tomcat/webapps/wings-portal/META-INF/context.xml
 
-# Start WINGS
-RUN chmod 755 /setenv.sh 
-CMD /setenv.sh && service tomcat8 start && /bin/bash
+WORKDIR /usr/local/tomcat
+
