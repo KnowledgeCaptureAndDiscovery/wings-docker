@@ -39,13 +39,13 @@ RUN mvn package
 
 # Add wings properties
 RUN mkdir -p /opt/wings/storage/default
-ADD ./config/default/portal.properties /opt/wings/storage/default/portal.properties
+COPY ./config/default/portal.properties /opt/wings/storage/default/portal.properties
 
 # Add Wings build to tomcat (Deploy)
 RUN cp -R /wings-src/target/wings-portal-4.0-SNAPSHOT /usr/local/tomcat/webapps/wings-portal
 
 # Add wings context file to the wings portal webapp
-ADD ./config/default/wings-portal.xml /usr/local/tomcat/webapps/wings-portal/META-INF/context.xml
+COPY ./config/default/wings-portal.xml /usr/local/tomcat/webapps/wings-portal/META-INF/context.xml
 
 
 ADD http://www.wings-workflows.org/downloads/docker/latest/portal/setenv.txt /setenv.sh
