@@ -37,7 +37,8 @@ ADD ./config/default/portal.properties /opt/wings/storage/default/portal.propert
 # Add Wings build to tomcat (Deploy)
 RUN cp -R /wings-src/target/wings-portal-4.0-SNAPSHOT /usr/local/tomcat/webapps/wings-portal
 
-ADD ./config/default/wings-portal.xml /etc/tomcat8/Catalina/localhost/wings-portal.xml
+# Add wings context file to the wings portal webapp
+ADD ./config/default/wings-portal.xml /usr/local/tomcat/webapps/wings-portal/META-INF/context.xml
 
 RUN sed -i 's/Resource name="UserDatabase" auth/Resource name="UserDatabase" readonly="false" auth/' /etc/tomcat8/server.xml
 RUN sed -i 's/<\/tomcat-users>/  <user username="admin" password="4dm1n!23" roles="WingsUser,WingsAdmin"\/>\n<\/tomcat-users>/' /etc/tomcat8/tomcat-users.xml
