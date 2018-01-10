@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM tomcat:8
 RUN sed -i 's/debian testing main/debian testing main contrib non-free/' /etc/apt/sources.list
 
 # Install general tools
