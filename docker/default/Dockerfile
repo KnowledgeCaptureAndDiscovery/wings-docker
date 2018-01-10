@@ -36,7 +36,7 @@ ENV WINGS_MODE='dind'
 
 # Install wings
 ADD ./config/pom.xml /wings-src/pom.xml
-RUN mkdir /wings-src
+RUN mkdir -p /wings-src
 WORKDIR /wings-src
 RUN mvn package
 
