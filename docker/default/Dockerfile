@@ -24,13 +24,21 @@ RUN add-apt-repository \
    stable"
 RUN apt-get update && apt-get -y install docker-ce
 
-# Install WINGS
-RUN mkdir -p /opt/wings/storage/default
-ADD ./config/default/wings-portal.xml /etc/tomcat8/Catalina/localhost/wings-portal.xml
-ADD ./config/default/portal.properties /opt/wings/storage/default/portal.properties
-RUN mkdir /wings-src
+# Install wings
 ADD ./config/pom.xml /wings-src/pom.xml
-RUN cd /wings-src && mvn package
+
+WORKDIR /wings-src
+RUN mvn package
+
+
+RUN mkdir -p /opt/wings/storage/default
+ADD ./config/default/portal.properties /opt/wings/storage/default/portal.properties
+
+
+ADD ./config/default/wings-portal.xml /etc/tomcat8/Catalina/localhost/wings-portal.xml
+
+RUN mkdir /wings-src
+
 RUN cp -R /wings-src/target/wings-portal-4.0-SNAPSHOT /opt/wings/server
 RUN sed -i 's/Resource name="UserDatabase" auth/Resource name="UserDatabase" readonly="false" auth/' /etc/tomcat8/server.xml
 RUN sed -i 's/=tomcat8/=root/' /etc/default/tomcat8
