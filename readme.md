@@ -12,15 +12,53 @@ In order to use this images, you can simply pull them from dockerhub:
 * ```docker pull kcapd/wings-genomics```
 
 ## Building the Image
-Alternatively, you may build any of the docker files in the "docker" folder of this repository. **Please build them from the folder which contains this readme**. For example:
-
-```docker build -t [IMAGE_NAME] -f docker/default/Dockerfile . ```
+Alternatively, you may build any of the docker files in the "docker" folder of this repository. **Please build them from the folder which contains this readme**. 
 
 Note that this takes a little bit more time than simply pulling the images from dockerhub. However, this approach is better if you want to install additional software on your WINGS image.
 
-## Executing WINGS:
+There are two ways to build the image:
 
-Once you have pulled or created your images, you should run the file ```start-wings.sh``` that you will find on the "scripts" folder of this repository: 
+### Using docker-compose (recommended)
+If docker-compose is installed, you may use it to build the image. The instructions are defined in the `docker-compose.yml` file. 
+
+```bash
+docker-compose build
+```
+
+The parameters to build the image may be changed directly in the compose file (such as the image tag, volume name, ports, etc.).
+
+### Using docker
+
+```bash
+docker build -t [IMAGE_NAME] -f docker/default/Dockerfile . 
+```
+
+## Executing WINGS:
+Once you have pulled or created your images, you can run wings in two ways:
+
+### Using docker-compose (recommended)
+To run the server use
+
+```bash
+docker-compose up
+```
+
+You may also specify the `-d` flag to run in detached mode.
+
+If the server is running, you can enter the container by running
+
+```bash
+docker-compose exec [IMAGE_NAME] bash
+```
+
+If the server is not running, you can run it inside the container with the following command:
+
+```bash
+docker-compose run [IMAGE_NAME] bash
+```
+
+### Using the startup script
+You should run the file ```start-wings.sh``` that you will find on the "scripts" folder of this repository: 
 
 ```bash
 # If [NAME] is not specified, it defaults to wings.
@@ -41,7 +79,31 @@ docker run --interactive \
 
 And now you can access WINGS' web interface from the Docker image: ```http://localhost:8080/wings-portal```
 
-If you want to stop the WINGS container, execute the following command:
+## Stoping WINGS
+There are two ways to stop the WINGS container
+
+### Using docker-compose (recommended)
+If not in detached mode, you can stop the container with `ctrl + c`. If in detached mode, you can stop the container using:
+
+```bash
+docker-compose stop
+```
+
+If you wish to completely remove containers, networks and volumes use:
+
+```bash
+docker-compose down
+```
+
+**NOTE**: The command above only removes unnamed volumes. If you wish to remove *ALL* volumes use:
+
+```bash 
+docker-compose down -v
+```
+
+### Using docker
+
+Execute the following command:
 
 ```bash
 docker stop kcapd/wings-base
