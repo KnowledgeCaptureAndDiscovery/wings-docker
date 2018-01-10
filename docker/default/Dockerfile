@@ -34,13 +34,11 @@ RUN mvn package
 RUN mkdir -p /opt/wings/storage/default
 ADD ./config/default/portal.properties /opt/wings/storage/default/portal.properties
 
+# Add Wings build to tomcat (Deploy)
+RUN cp -R /wings-src/target/wings-portal-4.0-SNAPSHOT /usr/local/tomcat/webapps/wings-portal
 
 ADD ./config/default/wings-portal.xml /etc/tomcat8/Catalina/localhost/wings-portal.xml
 
-
-
-
-RUN cp -R /wings-src/target/wings-portal-4.0-SNAPSHOT /opt/wings/server
 RUN sed -i 's/Resource name="UserDatabase" auth/Resource name="UserDatabase" readonly="false" auth/' /etc/tomcat8/server.xml
 RUN sed -i 's/<\/tomcat-users>/  <user username="admin" password="4dm1n!23" roles="WingsUser,WingsAdmin"\/>\n<\/tomcat-users>/' /etc/tomcat8/tomcat-users.xml
 ADD http://www.wings-workflows.org/downloads/docker/latest/portal/setenv.txt /setenv.sh
