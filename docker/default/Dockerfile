@@ -31,6 +31,9 @@ COPY ./config/tomcat/tomcat-users.xml /usr/local/tomcat/conf/
 # Add the tomcat server configuration file
 COPY ./config/tomcat/server.xml /usr/local/tomcat/conf/
 
+# Add wings environment variable
+ENV WINGS_MODE='dind'
+
 # Install wings
 ADD ./config/pom.xml /wings-src/pom.xml
 RUN mkdir /wings-src
@@ -48,7 +51,6 @@ RUN cp -R /wings-src/target/wings-portal-4.0-SNAPSHOT /usr/local/tomcat/webapps/
 COPY ./config/default/wings-portal.xml /usr/local/tomcat/webapps/wings-portal/META-INF/context.xml
 
 
-ADD http://www.wings-workflows.org/downloads/docker/latest/portal/setenv.txt /setenv.sh
 EXPOSE 8080
 
 # Start WINGS
