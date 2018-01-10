@@ -2,8 +2,19 @@ FROM tomcat:8
 RUN sed -i 's/debian testing main/debian testing main contrib non-free/' /etc/apt/sources.list
 
 # Install general tools
-RUN apt-get update
-RUN apt-get -y install graphviz unzip curl libssl-dev libcurl4-openssl-dev libxml2-dev python-pip tomcat8 git cgroupfs-mount maven
+RUN apt-get update && apt-get -y install --no-install-recommends \
+        graphviz \
+        libcurl4-openssl-dev \
+        libxml2-dev \
+        python-pip \
+        git \
+        cgroupfs-mount \
+        maven \
+        tcl \
+        tk \
+        apt-transport-https \
+        software-properties-common \
+        gnupg2
 
 # Install WINGS
 RUN mkdir -p /opt/wings/storage/default
