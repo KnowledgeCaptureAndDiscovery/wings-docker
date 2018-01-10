@@ -35,7 +35,7 @@ COPY ./config/tomcat/server.xml /usr/local/tomcat/conf/
 ENV WINGS_MODE='dind'
 
 # Install wings
-ADD ./config/pom.xml /wings-src/pom.xml
+COPY ./config/pom.xml /wings-src/pom.xml
 RUN mkdir -p /wings-src
 WORKDIR /wings-src
 RUN mvn package
