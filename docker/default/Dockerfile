@@ -24,6 +24,13 @@ RUN add-apt-repository \
    stable"
 RUN apt-get update && apt-get -y install docker-ce
 
+# Configure tomcat
+# Add the tomcat users file
+COPY ./config/tomcat/tomcat-users.xml /usr/local/tomcat/conf/
+
+# Add the tomcat server configuration file
+RUN sed -i 's/Resource name="UserDatabase" auth/Resource name="UserDatabase" readonly="false" auth/' /etc/tomcat8/server.xml
+
 # Install wings
 ADD ./config/pom.xml /wings-src/pom.xml
 RUN mkdir /wings-src
@@ -40,8 +47,7 @@ RUN cp -R /wings-src/target/wings-portal-4.0-SNAPSHOT /usr/local/tomcat/webapps/
 # Add wings context file to the wings portal webapp
 ADD ./config/default/wings-portal.xml /usr/local/tomcat/webapps/wings-portal/META-INF/context.xml
 
-RUN sed -i 's/Resource name="UserDatabase" auth/Resource name="UserDatabase" readonly="false" auth/' /etc/tomcat8/server.xml
-RUN sed -i 's/<\/tomcat-users>/  <user username="admin" password="4dm1n!23" roles="WingsUser,WingsAdmin"\/>\n<\/tomcat-users>/' /etc/tomcat8/tomcat-users.xml
+
 ADD http://www.wings-workflows.org/downloads/docker/latest/portal/setenv.txt /setenv.sh
 EXPOSE 8080
 
