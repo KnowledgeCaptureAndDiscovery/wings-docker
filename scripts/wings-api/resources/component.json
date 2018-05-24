@@ -1,0 +1,39 @@
+{
+  "inputs": [{
+      "role": "classIndex",
+      "prefix": "-c",
+      "isParam": true,
+      "type": "xsd:integer",
+      "dimensionality": 0,
+      "paramDefaultValue": 0
+    },
+    {
+      "role": "model",
+      "prefix": "-l",
+      "isParam": false,
+      "type": "dcdom:Model",
+      "dimensionality": 0
+    },
+    {
+      "role": "testData",
+      "prefix": "-T",
+      "isParam": false,
+      "type": "dcdom:Instance",
+      "dimensionality": 0
+    }
+  ],
+  "outputs": [{
+    "role": "classification",
+    "prefix": "-O",
+    "isParam": false,
+    "type": "dcdom:DTClassification",
+    "dimensionality": 0
+  }],
+  "rulesText": "[ backwardID3ClassifierIsDiscrete: print(Firing backwardID3ClassifierIsDiscrete) (?c rdf:type acdom:ID3ClassifierClass) (?c ac:hasInput ?idvmodel) (?idvmodel ac:hasArgumentID 'model') (?c ac:hasInput ?idvdata) (?idvdata ac:hasArgumentID 'testData') -> (?idvdata dcdom:isDiscrete 'true'^^xsd:boolean) (?idvmodel dcdom:isDiscrete 'true'^^xsd:boolean) print(Setting isDiscrete of ?idvdata to true) ]",
+  "requirement": {
+    "storageGB": 0,
+    "memoryGB": 0,
+    "need64bit": false,
+    "softwareIds": []
+  }
+}

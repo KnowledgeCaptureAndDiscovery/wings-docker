@@ -5,17 +5,22 @@ import wings.user
 import wings.domain
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-s", "--server", help="Wings portal server", 
-        default="http://localhost:8080/wings-portal")
-parser.add_argument("-u", "--userid", help="Portal admin userid", default="admin")
-parser.add_argument("-p", "--password", help="Portal admin password", default="4dm1n!23")
-parser.add_argument("-gu", "--get_user_id", help="User's id to get details for")
+parser.add_argument("-s", "--server", help="Wings portal server",
+                    default="http://localhost:8080/wings-portal")
+parser.add_argument(
+    "-u", "--userid", help="Portal admin userid", default="admin")
+parser.add_argument("-p", "--password",
+                    help="Portal admin password", default="4dm1n!23")
+parser.add_argument("-gu", "--get_user_id",
+                    help="User's id to get details for")
 parser.add_argument("-nu", "--new_userid", help="New user's id")
 parser.add_argument("-np", "--new_password", help="New user's password")
 parser.add_argument("-nn", "--new_name", help="New user's name")
-parser.add_argument("-na", "--is_admin", help="New user id admin", action="store_true")
+parser.add_argument("-na", "--is_admin",
+                    help="New user id admin", action="store_true")
 parser.add_argument("-du", "--delete_userid", help="Deleting user's id")
-parser.add_argument("-dl", "--delete_user_list", help="Delete users from csv file")
+parser.add_argument("-dl", "--delete_user_list",
+                    help="Delete users from csv file")
 parser.add_argument("-nl", "--new_user_list", help="Add users from csv file")
 args = parser.parse_args()
 
@@ -23,15 +28,16 @@ args = parser.parse_args()
 user = wings.ManageUser(args.server, args.userid)
 
 # Login with password
-if user.login(args.password): 
+if user.login(args.password):
     if args.get_user_id:
         print user.get_user_details(args.get_user_id)
 
     elif args.new_userid and args.new_password and args.new_name:
         if user.add_user(args.new_userid):
-            user.set_user_details(args.new_userid, args.new_password, args.new_name, args.is_admin)
+            user.set_user_details(
+                args.new_userid, args.new_password, args.new_name, args.is_admin)
         else:
-            print "Could not create user: %s" % args.new_userid;
+            print "Could not create user: %s" % args.new_userid
     elif args.new_user_list:
         with open(args.new_user_list, 'rb') as csvfile:
             fdata = csv.reader(csvfile)
@@ -50,12 +56,14 @@ if user.login(args.password):
                 if row[3]:
                     domain = wings.ManageDomain(args.server, newuser)
                     if domain.login(row[1]):
-                        csvfile = os.path.dirname(args.new_user_list) + '/' + row[3]
+                        csvfile = os.path.dirname(
+                            args.new_user_list) + '/' + row[3]
                         with open(csvfile, 'rb') as domfile:
                             domdata = csv.reader(domfile)
                             defdom = None
                             for dom in domdata:
-                                domname = os.path.splitext(os.path.basename(dom[0]))[0]
+                                domname = os.path.splitext(
+                                    os.path.basename(dom[0]))[0]
                                 if not domain.get_domain_details(domname):
                                     if defdom == None:
                                         defdom = domname
