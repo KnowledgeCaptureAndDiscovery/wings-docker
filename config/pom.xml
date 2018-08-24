@@ -7,8 +7,8 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.isi.wings</groupId>
   <artifactId>wings-portal</artifactId>
-  <version>4.0-SNAPSHOT</version>
-  <name>Wings Portal Snapshot [11-27-2017]</name>
+  <version>4.1-SNAPSHOT</version>
+  <name>Wings Portal Snapshot [08-24-2018]</name>
   <packaging>war</packaging>
 
   <repositories>
@@ -23,7 +23,7 @@
     <dependency>
       <groupId>edu.isi.wings</groupId>
       <artifactId>wings-portal</artifactId>
-      <version>4.0-SNAPSHOT</version>
+      <version>4.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
   </dependencies> 

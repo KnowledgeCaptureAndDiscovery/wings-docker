@@ -45,7 +45,7 @@ RUN mkdir -p /opt/wings/storage/default
 COPY ./config/default/portal.properties /opt/wings/storage/default/portal.properties
 
 # Add Wings build to tomcat (Deploy)
-RUN cp -R /wings-src/target/wings-portal-4.0-SNAPSHOT /usr/local/tomcat/webapps/wings-portal
+RUN cp -R /wings-src/target/wings-portal-4.1-SNAPSHOT /usr/local/tomcat/webapps/wings-portal
 
 # Add wings context file to the wings portal webapp
 COPY ./config/default/wings-portal.xml /usr/local/tomcat/webapps/wings-portal/META-INF/context.xml

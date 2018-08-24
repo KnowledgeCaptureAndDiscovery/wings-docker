@@ -2,7 +2,7 @@ version: '3'
 
 services:
   wings:
-    image: "wings"
+    image: "kcapd/wings-base"
     build:
       context: .
       dockerfile: docker/default/Dockerfile
