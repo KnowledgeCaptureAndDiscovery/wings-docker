@@ -35,17 +35,19 @@ COPY ./config/tomcat/server.xml /usr/local/tomcat/conf/
 ENV WINGS_MODE='dind'
 
 # Install wings
-COPY ./config/pom.xml /wings-src/pom.xml
+RUN apt-get update && apt-get install -y git default-jdk
 RUN mkdir -p /wings-src
 WORKDIR /wings-src
-RUN mvn package
+RUN git clone https://github.com/KnowledgeCaptureAndDiscovery/wings
+WORKDIR /wings-src/wings
+RUN _JAVA_OPTIONS=-Djdk.net.URLClassPath.disableClassPathURLCheck=true mvn package
 
 # Add wings properties
 RUN mkdir -p /opt/wings/storage/default
 COPY ./config/default/portal.properties /opt/wings/storage/default/portal.properties
 
 # Add Wings build to tomcat (Deploy)
-RUN cp -R /wings-src/target/wings-portal-4.1-SNAPSHOT /usr/local/tomcat/webapps/wings-portal
+RUN cp -R /wings-src/wings/portal/target/wings-portal-4.1-SNAPSHOT /usr/local/tomcat/webapps/wings-portal
 
 # Add wings context file to the wings portal webapp
 COPY ./config/default/wings-portal.xml /usr/local/tomcat/webapps/wings-portal/META-INF/context.xml
