@@ -1,4 +1,9 @@
-# WINGS-Docker repository
+# WINGS-Docker repository [DEPRECATED]
+
+## DEPRECATED
+
+Dockerfile and related files are available in the [wings repository](https://github.com/KnowledgeCaptureAndDiscovery/wings)
+
 ## Introduction
 This repository contains different WINGS docker images with pre-installed software, as well as the instructions to run them.
 
