@@ -6,8 +6,8 @@ from .userop import UserOperation
 
 class ManageComponent(UserOperation):
 
-    def __init__(self, server, userid, domain):
-        super(ManageComponent, self).__init__(server, userid, domain)
+    def __init__(self, server, internal_server, userid, domain):
+        super(ManageComponent, self).__init__(server, internal_server, userid, domain)
         self.libns = self.get_export_url() + "components/library.owl#"
         self.dcdom = self.get_export_url() + "data/ontology.owl#"
         self.xsdns = "http://www.w3.org/2001/XMLSchema#"

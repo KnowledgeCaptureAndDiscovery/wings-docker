@@ -1,0 +1,10 @@
+{
+	"cycles_config": "file:sorghum-10percent.cyclesconfig",
+	"cycles_weather": "file:cycles-weather-test-1",
+	"cycles_reinit": "file:cycles-reinit-test-1",
+	"cycles_soil": "file:cycles-soil-test-1",
+	"cycles_planting-day-1": 100,
+	"cycles_planting-day-1-duration": 10,
+	"cycles_planting-day-2": 225,
+	"cycles_planting-day-2-duration": 10
+}

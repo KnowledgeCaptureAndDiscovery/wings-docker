@@ -6,8 +6,8 @@ from .userop import UserOperation
 
 class ManageData(UserOperation):
 
-    def __init__(self, server, userid, domain):
-        super(ManageData, self).__init__(server, userid, domain)
+    def __init__(self, server, internal_server, userid, domain):
+        super(ManageData, self).__init__(server, internal_server, userid, domain)
         self.dcdom = self.get_export_url() + "data/ontology.owl#"
         self.dclib = self.get_export_url() + "data/library.owl#"
 

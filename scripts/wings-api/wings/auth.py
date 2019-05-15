@@ -6,10 +6,13 @@ from pprint import pprint
 
 class Auth(object):
 
-    def __init__(self, server, userid):
+    def __init__(self, server, internal_server, userid):
         self.session = requests.Session()
         self.server = server
         self.userid = userid
+        self.internal_server = internal_server
+        if internal_server is None:
+            self.internal_server = server
 
     def login(self, password):
         response = self.session.get(self.server + '/sparql')

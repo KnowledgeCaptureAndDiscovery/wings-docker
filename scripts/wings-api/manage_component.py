@@ -6,6 +6,8 @@ import wings.component
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--server", help="Wings portal server",
                     default="http://localhost:8080/wings-portal")
+parser.add_argument("-is", "--internal_server", help="Wings internal server",
+                    default="http://localhost:8080/wings-portal")
 parser.add_argument(
     "-u", "--userid", help="Portal admin userid", default="admin")
 parser.add_argument("-p", "--password",
@@ -29,7 +31,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 # Create manage user api
-component = wings.ManageComponent(args.server, args.userid, args.domain)
+component = wings.ManageComponent(args.server, args.internal_server, args.userid, args.domain)
 
 # Login with password
 if component.login(args.password):

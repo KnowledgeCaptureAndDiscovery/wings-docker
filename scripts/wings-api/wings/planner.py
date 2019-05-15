@@ -6,15 +6,15 @@ from .userop import UserOperation
 
 class Planner(UserOperation):
 
-    def __init__(self, server, userid, domain, template):
-        super(Planner, self).__init__(server, userid, domain)
+    def __init__(self, server, internal_server, userid, domain, template):
+        super(Planner, self).__init__(server, internal_server, userid, domain)
         self.libns = self.get_export_url() + "data/library.owl#"
         self.wflowns = self.get_export_url() + "workflows/" + template + ".owl#"
         self.wflowid = self.wflowns + template
         self.xsdns = "http://www.w3.org/2001/XMLSchema#"
 
     def _set_bindings(self, invar, val, dataBindings, parameterBindings, parameterTypes):
-        if isinstance(val, basestring) and val.startswith('file:'):
+        if isinstance(val, str) and val.startswith('file:'):
             data = dataBindings.get(self.wflowns + invar, [])
             data.append(self.libns + val[5:])
             dataBindings[self.wflowns + invar] = data
