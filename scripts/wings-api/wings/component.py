@@ -107,6 +107,21 @@ class ManageComponent(UserOperation):
         self.session.post(self.get_request_url() +
                           'components/type/saveComponentJSON', postdata)
 
+    def upload_component(self, filepath, cid):
+        cid = self.get_component_id(cid)
+        fname = os.path.basename(filepath)
+        files = {"file": (fname, open(filepath, "rb"))}
+        postdata = {"name": fname, "type": "component", "id": cid}
+        response = self.session.post(
+            self.get_request_url() + "upload", data=postdata, files=files
+        )
+        if response.status_code == 200:
+            details = response.json()
+            if details["success"]:
+                loc = os.path.basename(details["location"])
+                self.set_component_location(cid, details["location"])
+                return loc
+            
     def set_component_location(self, cid, location):
         postdata = {'cid': self.get_component_id(cid), 'location': location}
         self.session.post(self.get_request_url() +
